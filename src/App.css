@@ -1,0 +1,31 @@
+.animate{
+  padding: 15%;
+  border: 10px white solid;
+  border-radius: 2%;
+
+animation: draw 3s ease-in-out;
+animation-iteration-count: infinite;
+animation-direction: alternate;
+}
+
+
+@keyframes draw{
+    100%{
+       border: 10px rgb(251, 255, 253) solid;
+    }
+    80%{
+       border-right: 10px rgb(29, 221, 109) solid;
+    }
+    60%{
+       border-bottom: 10px rgb(29, 221, 109) solid;
+    }
+    40%{
+       border-left: 10px rgb(29, 221, 109) solid;
+    }
+    20%{
+       border-top: 10px rgb(29, 221, 109) solid;
+    }    
+    0%{
+       border: 10px rgb(247, 248, 248) solid;
+    }
+}
