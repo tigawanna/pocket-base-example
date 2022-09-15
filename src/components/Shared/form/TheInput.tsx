@@ -28,23 +28,24 @@ const isError = () => {
 };
 
 return (
-  <div className="flex-col-center  w-full">
-    <label className="font-bold text-md capitalize text-black dark:text-white  w-[80%] flex items-start">
+  <div className="flex-col-center  w-full ">
+    <label className="font-bold text-md capitalize  w-[80%] flex items-start">
       {field}
     </label>
     <input
       style={{ borderColor: isError() ? "red" : "" }}
-      className="w-[80%] md:w-[80%] p-2 m-1 border-black h-10 text-base
-    text-black dark:text-white border rounded-sm dark:bg-black active:border-purple-700"
+      className="w-[80%] md:w-[80%] p-2 m-1   border border-black dark:border-white h-10 text-base
+       rounded-sm   dark:bg-slate-700"
       id={field}
       type={type}
       placeholder={"enter " + field}
       onChange={handleChange}
-    // @ts-ignore
+      autoComplete={"off"}
+      // @ts-ignore
       value={input[field]}
     />
     {isError() ? (
-      <div className="text-base  text-red-300">{error.message}</div>
+      <div className="text-base  text-red-600">{error.message}</div>
     ) : null}
   </div>
 );

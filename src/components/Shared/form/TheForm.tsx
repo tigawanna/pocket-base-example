@@ -1,12 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { TheInput } from "./TheInput";
+import { TheButton } from './../TheButton';
 
 type FormError = { name: string; message: string };
-type FormInput = { name: string; age: number; height: number; hobbies: string };
+type FormInput = any ;
 
 type Props = {
   header: string;
   validate: (input: any) => boolean;
+  input :FormInput
 };
 
 type State = {
@@ -21,7 +23,7 @@ class TheForm extends React.Component<Props, State> {
 
     this.state = {
       value: "",
-      input: { name: "", age: 0, height: 0, hobbies: "" },
+      input: this.props.input,
       error: { name: "", message: "" },
     };
     this.handleChange = this.handleChange.bind(this);
@@ -59,43 +61,33 @@ class TheForm extends React.Component<Props, State> {
   }
 
   render() {
-    const { header } = this.props;
+ const inputs = Object.keys(this.state.input);
     return (
       <div className="w-full h-full flex-col-center">
         <form
-          className="h-[70%] w-[100%] md:w-[70%] text-base font-normal flex-col-center bg-red-100"
-          onSubmit={this.handleSubmit}
-        >
-          <div className="text-lg font-bold font-serif">{header}</div>
-          <TheInput
+          className="h-[70%] w-[90%] md:w-[70%] text-base font-normal flex-col-center 
+          border-2 rounded-md shadow-md shadow-slate-600"
+          onSubmit={this.handleSubmit} >
+          <div className="text-lg font-bold font-serif">{this.props.header}</div>
+          {
+            inputs&&inputs.map((item,index)=>{
+            return <TheInput
+            key ={index + item}
             error={this.state.error}
             handleChange={this.handleChange}
-            field={"name"}
+            field={item}
             input={this.state.input}
             type={"text"}
+          />;
+            })
+          }
+
+          <TheButton
+            label="Submit"
+            onClick={() => console.log("hey")}
+            radius="5px"
+            border={"1px  solid"}
           />
-          <TheInput
-            error={this.state.error}
-            handleChange={this.handleChange}
-            field={"age"}
-            input={this.state.input}
-            type={"number"}
-          />
-          <TheInput
-            error={this.state.error}
-            handleChange={this.handleChange}
-            field={"height"}
-            input={this.state.input}
-            type={"number"}
-          />
-          <TheInput
-            error={this.state.error}
-            handleChange={this.handleChange}
-            field={"hobbies"}
-            input={this.state.input}
-            type={"text"}
-          />
-          <input type="submit" value="Submit" />
         </form>
       </div>
     );
