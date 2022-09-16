@@ -8,6 +8,7 @@ type FormInput = any ;
 type Props = {
   header: string;
   validate: (input: any) => boolean;
+  submitFn:(input:any)=>Promise<any>
   input :FormInput
 };
 
@@ -42,8 +43,7 @@ class TheForm extends React.Component<Props, State> {
   }
   async handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target;
-    console.log("value == ", value);
-    this.setState({
+   this.setState({
       input: { ...this.state.input, [event.target.id]: value },
     });
     // this.setError({name:"",message:""})
@@ -51,17 +51,32 @@ class TheForm extends React.Component<Props, State> {
 
   async handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("Ainput: ", this.state.input);
-    if (this.isValid()) {
+    console.log("is valid: ",this.isValid());
+    if (!this.isValid()) {
       console.log("the error ", this.state.error);
     }
+    else{
+    try {
+      // this.setError({ name: "", message: "" });
+      const result = await this.props.submitFn(this.state.input);
+      console.log("save result === ", result);
+      console.log("A name was submitted: ", this.state.input);
+    } catch (err: any) {
+      console.log("error adding item", err.message);
+      this.setError({ name: "main", message: err.message });
+    }
 
-    // this.setError({ name: "", message: "" });
-    console.log("A name was submitted: ", this.state.input);
+    }
+
+    
+
+
   }
 
   render() {
- const inputs = Object.keys(this.state.input);
+ const inputs = Object.entries(this.state.input)
+//  console.log("key and value ===",kv)   
+//  const inputs = Object.keys(this.state.input);
     return (
       <div className="w-full h-full flex-col-center">
         <form
@@ -71,17 +86,24 @@ class TheForm extends React.Component<Props, State> {
           <div className="text-lg font-bold font-serif">{this.props.header}</div>
           {
             inputs&&inputs.map((item,index)=>{
+             
             return <TheInput
-            key ={index + item}
+            key ={index + item[0]}
             error={this.state.error}
             handleChange={this.handleChange}
-            field={item}
+            field={item[0]}
+            type={typeof item[1]}
             input={this.state.input}
-            type={"text"}
+           
           />;
             })
           }
-
+           {
+            this.state.error.name ==="main"?
+            <div className="text-red-900 border border-red-500 p-2 m-1 w-[80%]
+              break-words bg-red-100 text-[14px] rounded-sm
+            ">{this.state.error.message}</div>:null
+            }
           <TheButton
             label="Submit"
             onClick={() => console.log("hey")}

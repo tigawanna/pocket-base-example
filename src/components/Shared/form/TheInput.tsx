@@ -8,7 +8,7 @@ interface TheInputProps {
     name: string;
     message: string;
   };
-  type:"text"|"number"
+  type:any
 }
 
 export const TheInput: React.FC<TheInputProps> = ({
