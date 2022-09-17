@@ -1,8 +1,13 @@
 import React from 'react'
 
+// type options = {
+//   name: string;
+//   value: string;
+// }
 interface TheInputProps {
   handleChange(event: React.ChangeEvent<HTMLInputElement>): Promise<void>;
   field: string;
+  // select?: [{ id: string, opts: options }]
   input: { name: string };
   error: {
     name: string;

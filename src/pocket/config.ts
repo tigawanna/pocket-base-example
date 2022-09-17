@@ -49,7 +49,10 @@ export const allPeeps=async():Promise<PeepResponse[]|Record[]>=>{
 }
 
 export const appendToCache=async(index:[string],queryClient:QueryClient,newData:any)=>{
- queryClient.setQueryData(index, (old:any) => [...old,newData]);
+ queryClient.setQueryData(index, (old:any) => {
+  old.unshift(newData)
+  return old
+ });
 }
 
 export const getPrevdata =(index:[string],queryClient:QueryClient)=>{
@@ -59,37 +62,6 @@ console.log("previous items", previous);
 
 
 
-  const appendtoCache=async(queryClient:QueryClient,newobj:any,index:any[])=>{
-  
-  // console.log("index for the query === ",index)
-  // console.log("new data to append=== ",newobj)
 
-  await queryClient.cancelQueries(index);
-  // Snapshot the previous value
-  const previous = queryClient.getQueryData(index) as any[]
-
-  // Optimistically update to the new value
-   if(previous){
-    //since this is being called on create and update , if the dpaymentId
-  //exists it's spliced out to avoid duplication in cache
-
-    queryClient.setQueryData(index, (oldobj:any) => {
-      // console.log("oldobj === ",oldobj)
-      let final =  [...oldobj, newobj]
-      for(let i = 0; i<oldobj.length; i++){
-        if(oldobj[i].paymentId === newobj.paymentId){
-     
-         oldobj.splice(i,1,newobj)
-         final = oldobj
-        //  console.log("oldobj after splice=== ",oldobj)  
-         break
-        }
-      }
-      
-      return(final)
-    });
-   
-  }
-}
 
 

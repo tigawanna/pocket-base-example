@@ -25,7 +25,7 @@ item:PeepResponse|Record
 export const OneRow: React.FC<OneRowProps> = ({item}) => {
 return (
   <div
-    className="p-1 m-1 w-full rounded-md 
+    className="p-1 m-1 w-full rounded-md transition duration-3000 ease-in-out
   shadow shadow-slate-600 flex flex-col border border-black"
   >
     <div className="w-full text-lg font-normal text-purple-600">{item.id}</div>
