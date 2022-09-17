@@ -1,27 +1,27 @@
 import React from 'react'
+import { FormOptions } from './../../../App';
 
 interface TheSelectProps {
   handleChange(event: React.ChangeEvent<HTMLSelectElement>): Promise<void>;
-  field: string;
   input: { name: string };
+  item:FormOptions
   error: {
     name: string;
     message: string;
   };
-  type:any
 }
 
 export const TheSelect: React.FC<TheSelectProps> = ({
     handleChange,
-    error,
-    input,
-    field,
-    type
+  error,
+  input,
+  item
+
 }) => {
 
 
 const isError = () => {
-  if (error.message != "" && error.name === field) {
+  if (error.message != "" && error.name === item.field_name) {
     return true;
   }
   return false;
@@ -34,23 +34,24 @@ const options=[
 ]
 return (
   <div className="flex-col-center  w-full ">
-    <div className="w-full h-full flex sm:flex-row flex-col ">
-      {/* select item */}
-      <div className="w-[95%] flex flex-col m-1 ">
-        <label className="text-sm">{field}</label>
-        <select id={field} onChange={handleChange} className="p-2 border-0 text-black">
-          <option value={options[0].value}>select one</option>
+    <label className="font-bold text-md capitalize  w-[80%] flex items-start">
+      {item.field_name}
+    </label>
+      <select id={item.field_name} onChange={handleChange} 
+       className="w-[80%] md:w-[80%] p-2 m-1  border border-black 
+        dark:border-white h-10 text-base rounded-sm   dark:bg-slate-700">
+          <option value={options[0].value}>Pick a {" "}{item.field_name}</option>
           {
-            options&&options.map((opt)=>{
-              return(
-                <option value={opt.value}>{opt.name}</option>
+            options&&options.map((opt,index)=>{
+            return(
+            <option key={opt.name + index} value={opt.value}>
+              {opt.name}
+            </option>
               )
             })
           }
         </select>
 
-     </div>
-    </div>
     {isError() ? (
       <div className="text-base  text-red-600">{error.message}</div>
     ) : null}

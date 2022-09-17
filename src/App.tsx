@@ -18,6 +18,12 @@ type MutationVars = {
   data: any;
   index: string;
 }
+export interface FormOptions {
+  field_name: string;
+  field_type: string;
+  default_value: string | number
+  options?: { name: string; value: string }[]
+}
 function App({ }: AppProps) {
 
   const queryClient = useQueryClient();
@@ -67,6 +73,20 @@ function App({ }: AppProps) {
   const toggle = () => {
     setTheme(colorTheme);
   };
+  const options = [
+    { name: "Cash deposit", value: "cash_deposit" },
+    { name: "Cheque", value: "cheque" },
+    { name: "Mpesa", value: "mpesa" },
+    { name: "Direct deposit", value: "direct_deposit" }
+  ]
+
+
+  const better_input:FormOptions[] = [
+    {field_name:"name",field_type:"text",default_value:"leeroy"},
+    { field_name:"age",field_type:"number",default_value:24},
+    { field_name:"bio",field_type:"text",default_value:"mahindi wary"},
+    { field_name:"language",field_type:"select",default_value:"pick a language",options}
+  ]
 
   const input = { name: "boni", age: 10, bio: "slutember" };
   const createPeep = async (data: any) => {
@@ -86,8 +106,9 @@ function App({ }: AppProps) {
         <TheForm
           header="FORM"
           validate={validate}
-          input={input}
+          fields={better_input}
           submitFn={createPeep}
+          
         />
       </div>
       <div className="flex-center ">

@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormOptions } from '../../../App';
 
 // type options = {
 //   name: string;
@@ -6,27 +7,24 @@ import React from 'react'
 // }
 interface TheInputProps {
   handleChange(event: React.ChangeEvent<HTMLInputElement>): Promise<void>;
-  field: string;
-  // select?: [{ id: string, opts: options }]
+  item: FormOptions
   input: { name: string };
   error: {
     name: string;
     message: string;
   };
-  type:any
-}
+ }
 
 export const TheInput: React.FC<TheInputProps> = ({
     handleChange,
     error,
     input,
-    field,
-    type
+    item
 }) => {
 
 
 const isError = () => {
-  if (error.message != "" && error.name === field) {
+  if (error.message != "" && error.name === item.field_name) {
     return true;
   }
   return false;
@@ -35,19 +33,19 @@ const isError = () => {
 return (
   <div className="flex-col-center  w-full ">
     <label className="font-bold text-md capitalize  w-[80%] flex items-start">
-      {field}
+      {item.field_name}
     </label>
     <input
       style={{ borderColor: isError() ? "red" : "" }}
       className="w-[80%] md:w-[80%] p-2 m-1   border border-black dark:border-white h-10 text-base
        rounded-sm   dark:bg-slate-700"
-      id={field}
-      type={type}
-      placeholder={"enter " + field}
+      id={item.field_name}
+      type={item.field_type}
+      placeholder={"enter " + item.field_name}
       onChange={handleChange}
       autoComplete={"off"}
       // @ts-ignore
-      value={input[field]}
+      value={input[item.field_name]}
     />
     {isError() ? (
       <div className="text-base  text-red-600">{error.message}</div>

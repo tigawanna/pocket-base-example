@@ -4,32 +4,39 @@ import { TheButton } from './../TheButton';
 import { TheSelect } from "./TheSelect";
 
 type FormError = { name: string; message: string };
-type FormInput = any;
-type options = {
-  name: string;
-  value: string;
+interface FormOptions {
+  field_name: string;
+  field_type: string;
+  default_value: string | number
+  options?: { name: string; value: string }[]
 }
+
 type Props = {
   header: string;
   validate: (input: any) => boolean;
   submitFn: (input: any) => Promise<any>
-  input: FormInput
-  select?:[{id:string,opts:options}]
+  fields: FormOptions[]
+
 };
 
 type State = {
   value: string;
-  input: FormInput;
+  input: any;
   error: FormError;
 };
 
 class TheForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
+  const state_input = {}
+  this.props.fields.forEach((item=>{
+    //@ts-ignore
+   state_input[item.field_name]=item.default_value
+  
+  }))
     this.state = {
       value: "",
-      input: this.props.input,
+      input: state_input,
       error: { name: "", message: "" },
     };
     this.handleChange = this.handleChange.bind(this);
@@ -87,33 +94,24 @@ class TheForm extends React.Component<Props, State> {
           onSubmit={this.handleSubmit} >
           <div className="text-lg font-bold font-serif">{this.props.header}</div>
           {
-            inputs && inputs.map((item, index) => {
-              if(this.props.select){
-                this.props.select?.map((slt)=>{
-                  if(slt.id === item[0]){
-                    return (
-                      <TheSelect
-                        key={index + item[0]}
-                        error={this.state.error}
-                        handleChange={this.handleChange}
-                        field={item[0]}
-                        type={typeof item[1]}
-                        input={this.state.input}
-                      />
-                    )
-            
-                  }
-                 })
-              }
-
+            this.props.fields && this.props.fields.map((item, index) => {
+            if(item.field_type === "select"){
               return (
-                <TheInput
-                key={index + item[0]}
+                <TheSelect
+                  key={index + item.field_name}
+                  error={this.state.error}
+                  handleChange={this.handleChange}
+                  item={item}
+                  input={this.state.input}
+                />)
+            }
+              return (
+              <TheInput
+                key={index + item.field_name}
                 error={this.state.error}
                 handleChange={this.handleChange}
-                field={item[0]}
-                type={typeof item[1]}
                 input={this.state.input}
+                item={item}
                  />)
             })
           }
