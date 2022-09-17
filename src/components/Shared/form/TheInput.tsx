@@ -1,10 +1,6 @@
 import React from 'react'
 import { FormOptions } from '../../../App';
 
-// type options = {
-//   name: string;
-//   value: string;
-// }
 interface TheInputProps {
   handleChange(event: React.ChangeEvent<HTMLInputElement>): Promise<void>;
   item: FormOptions

@@ -26,12 +26,7 @@ const isError = () => {
   }
   return false;
 };
-const options=[
-  {name:"Cash deposit",value:"cash_deposit"},
-  {name:"Cheque",value:"cheque"},
-  {name:"Mpesa",value:"mpesa"},
-  {name:"Direct deposit",value:"direct_deposit"}
-]
+const options = item?.options
 return (
   <div className="flex-col-center  w-full ">
     <label className="font-bold text-md capitalize  w-[80%] flex items-start">
@@ -40,7 +35,7 @@ return (
       <select id={item.field_name} onChange={handleChange} 
        className="w-[80%] md:w-[80%] p-2 m-1  border border-black 
         dark:border-white h-10 text-base rounded-sm   dark:bg-slate-700">
-          <option value={options[0].value}>Pick a {" "}{item.field_name}</option>
+          <option value={options&&options[0].value}>Pick a {" "}{item.field_name}</option>
           {
             options&&options.map((opt,index)=>{
             return(

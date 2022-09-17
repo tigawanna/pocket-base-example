@@ -92,7 +92,7 @@ class TheForm extends React.Component<Props, State> {
           className="h-[70%] w-[90%] md:w-[70%] text-base font-normal flex-col-center 
           border-2 rounded-md shadow-md shadow-slate-600"
           onSubmit={this.handleSubmit} >
-          <div className="text-lg font-bold font-serif">{this.props.header}</div>
+          <div className="text-3xl font-bold font-serif p-1 m-1">{this.props.header}</div>
           {
             this.props.fields && this.props.fields.map((item, index) => {
             if(item.field_type === "select"){
@@ -126,6 +126,7 @@ class TheForm extends React.Component<Props, State> {
             onClick={() => console.log("hey")}
             radius="5px"
             border={"1px  solid"}
+            margin={"9px"}
           />
         </form>
       </div>
