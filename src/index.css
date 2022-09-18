@@ -7,18 +7,33 @@
   -webkit-text-size-adjust: 100%;
 }
 
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.flex-center{
-  @apply flex justify-center items-center
+.flex-center {
+  @apply flex justify-center items-center;
 }
-.flex-col-center{
-  @apply flex flex-col justify-center items-center
+.flex-col-center {
+  @apply flex flex-col justify-center items-center;
 }
 .scroll-bar {
   @apply scrollbar-thin scrollbar-thumb-purple-600 scrollbar-track-green-500;
+}
+
+.pop-in {
+  animation: fade 1s ease-in;
+  animation-direction: normal;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    /* transition: all 0.2s ease-out; */
+    background-color: rgb(196, 139, 241);
+  }
+
+  to {
+    opacity: 1;
+  }
 }

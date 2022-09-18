@@ -19,16 +19,45 @@ export interface PeepResponse {
 
 
 
-export const client = new PocketBase("http://192.168.43.238:8090");
+// export const client = new PocketBase("http://192.168.43.238:8090");
+
+export const client = new PocketBase("http://127.0.0.1:8090");
+  const redirectUrl = "http://127.0.0.1:8090/redirect.html";
 
 
+// export const getAdmin = async () => {
+//     return await client.admins.authViaEmail(
+//       "denniskinuthiaw@gmail.com",
+//       "SBwptpWeAN9BezV"
+//     );
+// };
+  export const providers = await client.users.listAuthMethods();
+// console.log("provider data === ",providers)
+// export const oAuthSignIn=async()=>{
+//   const providers = await client.users.listAuthMethods();
+//   const provider = providers.authProviders[0];
 
-export const getAdmin = async () => {
-    return await client.admins.authViaEmail(
-      "denniskinuthiaw@gmail.com",
-      "SBwptpWeAN9BezV"
-    );
-};
+//   console.log(" provider vars ==== ",
+//     provider.name,
+
+  
+//     provider.codeVerifier,
+//     redirectUrl
+//   );
+//   // authenticate
+//   const authRes = await client.users.authViaOAuth2(
+//     provider.name,
+//     // @ts-ignore
+//     params.get("code"),
+//     provider.codeVerifier,
+//     redirectUrl
+//   );
+
+//   console.log("succefull auth == ",authRes)
+//   return authRes;
+// }
+
+
 
 export const realTime = async (
   index: [string],

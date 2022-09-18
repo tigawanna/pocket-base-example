@@ -12,6 +12,7 @@ interface TheButtonProps {
   height?: string;
   radius?: string;
   width?: string;
+  textSize?:string
 }
 
 export const TheButton: React.FC<TheButtonProps> = ({
@@ -23,6 +24,7 @@ export const TheButton: React.FC<TheButtonProps> = ({
   border,
   color,
   color2,
+  textSize,
   height,
   radius,
   width,
@@ -39,6 +41,7 @@ export const TheButton: React.FC<TheButtonProps> = ({
         width,
         margin:margin??'5px',
         padding:padding??'5px',
+        fontSize:textSize??"15px"
         
       }}
     >
